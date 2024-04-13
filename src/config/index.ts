@@ -28,7 +28,7 @@ export const PRODUCT_CATEGORIES=[
             {
                 name:"Favorite Icon Picks",
                 href:"#",
-                imageSrc:'/nav/icons/mixed.jpg'
+                imageSrc:'/nav/icons/picks.jpg'
             },
             {
                 name:"New Arrivals",
