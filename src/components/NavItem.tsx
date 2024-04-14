@@ -15,6 +15,9 @@ interface NavItemProps {
   isAnyOpen: boolean;
 }
 
+
+
+
 const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
   return (
     <div className="flex">
