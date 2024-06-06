@@ -43,7 +43,7 @@ if(!cached.promise){
     cached.promise =payload.init({
         email:{
             transport:transporter,
-            fromAddress:"shrurose73@gmail.com",
+            fromAddress:"onboarding@resend.dev",
             fromName:'DigitalHippo'
         },
         secret: process.env.PAYLOAD_SECRET,
