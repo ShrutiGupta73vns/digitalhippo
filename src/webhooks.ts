@@ -90,7 +90,7 @@ try {
     from: 'DigitalHippo <shrurose73@gmail.com>',
     to: [user.email],
     subject: 'Thanks for your order! This is your receipt.',
-    html: ReceiptEmailHtml({
+    html: await ReceiptEmailHtml({
         date: new Date(),
         email: user.email,
         orderId: session.metadata.orderId,

@@ -43,10 +43,11 @@ var resend_1 = require("resend");
 var ReceiptEmail_1 = require("./components/emails/ReceiptEmail");
 var resend = new resend_1.Resend(process.env.RESEND_API_KEY);
 var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var webhookRequest, body, signature, event, session, payload, users, user, orders, order, data, error_1;
-    var _a, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var webhookRequest, body, signature, event, session, payload, users, user, orders, order, data, _a, _b, error_1;
+    var _c;
+    var _d, _e;
+    return __generator(this, function (_f) {
+        switch (_f.label) {
             case 0:
                 webhookRequest = req;
                 body = webhookRequest.rawBody;
@@ -60,13 +61,13 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                             .send("Webhook Error: ".concat(err instanceof Error ? err.message : 'Unknown Error'))];
                 }
                 session = event.data.object;
-                if (!((_a = session === null || session === void 0 ? void 0 : session.metadata) === null || _a === void 0 ? void 0 : _a.userId) || !((_b = session === null || session === void 0 ? void 0 : session.metadata) === null || _b === void 0 ? void 0 : _b.orderId)) {
+                if (!((_d = session === null || session === void 0 ? void 0 : session.metadata) === null || _d === void 0 ? void 0 : _d.userId) || !((_e = session === null || session === void 0 ? void 0 : session.metadata) === null || _e === void 0 ? void 0 : _e.orderId)) {
                     return [2 /*return*/, res.status(400).send("Webhook Error: No user present in metadata")];
                 }
-                if (!(event.type === 'checkout.session.completed')) return [3 /*break*/, 8];
+                if (!(event.type === 'checkout.session.completed')) return [3 /*break*/, 9];
                 return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
             case 1:
-                payload = _c.sent();
+                payload = _f.sent();
                 return [4 /*yield*/, payload.find({
                         collection: 'users',
                         where: {
@@ -76,7 +77,7 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                         },
                     })];
             case 2:
-                users = (_c.sent()).docs;
+                users = (_f.sent()).docs;
                 user = users[0];
                 if (!user)
                     return [2 /*return*/, res.status(404).json({ error: 'No such user exists.' })];
@@ -90,7 +91,7 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                         },
                     })];
             case 3:
-                orders = (_c.sent()).docs;
+                orders = (_f.sent()).docs;
                 order = orders[0];
                 if (!user)
                     return [2 /*return*/, res.status(404).json({ error: 'No such order exists.' })];
@@ -108,30 +109,33 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                     // send receipt
                 ];
             case 4:
-                _c.sent();
-                _c.label = 5;
+                _f.sent();
+                _f.label = 5;
             case 5:
-                _c.trys.push([5, 7, , 8]);
-                return [4 /*yield*/, resend.emails.send({
-                        from: 'DigitalHippo <shrurose73@gmail.com>',
-                        to: [user.email],
-                        subject: 'Thanks for your order! This is your receipt.',
-                        html: (0, ReceiptEmail_1.ReceiptEmailHtml)({
-                            date: new Date(),
-                            email: user.email,
-                            orderId: session.metadata.orderId,
-                            products: order.products,
-                        }),
+                _f.trys.push([5, 8, , 9]);
+                _b = (_a = resend.emails).send;
+                _c = {
+                    from: 'DigitalHippo <shrurose73@gmail.com>',
+                    to: [user.email],
+                    subject: 'Thanks for your order! This is your receipt.'
+                };
+                return [4 /*yield*/, (0, ReceiptEmail_1.ReceiptEmailHtml)({
+                        date: new Date(),
+                        email: user.email,
+                        orderId: session.metadata.orderId,
+                        products: order.products,
                     })];
-            case 6:
-                data = _c.sent();
-                res.status(200).json({ data: data });
-                return [3 /*break*/, 8];
+            case 6: return [4 /*yield*/, _b.apply(_a, [(_c.html = _f.sent(),
+                        _c)])];
             case 7:
-                error_1 = _c.sent();
+                data = _f.sent();
+                res.status(200).json({ data: data });
+                return [3 /*break*/, 9];
+            case 8:
+                error_1 = _f.sent();
                 res.status(500).json({ error: error_1 });
-                return [3 /*break*/, 8];
-            case 8: return [2 /*return*/, res.status(200).send()];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/, res.status(200).send()];
         }
     });
 }); };
