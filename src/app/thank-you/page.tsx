@@ -13,6 +13,7 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+
 const ThankYouPage = async ({ searchParams }: PageProps) => {
   const orderId = searchParams.orderId;
   const nextCookies = cookies();
