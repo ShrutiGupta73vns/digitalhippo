@@ -25,6 +25,7 @@ const { data : queryResults, isLoading} =trpc.getInfiniteProducts.useInfiniteQue
 },{
   getNextPageParam : (lastPage)=> lastPage.nextPage,
 })
+console.log(queryResults)
 
 const products = queryResults?.pages.flatMap((page)=>page.items)
  let map:(Product | null )[] = []
